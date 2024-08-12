@@ -17,6 +17,7 @@ now = datetime.datetime.now(datetime.UTC)
 VERBOSE = True
 VOTED = False
 LOGIN_ACTIVE = False
+LOGGED_IN = False
 USER_TOKEN = ""
 
 def update_priority_list():
@@ -39,8 +40,9 @@ def update_priority_list():
 
     print("Reading Priority List")
     # Get our current priority list
-    settings = json.load(os.curdir + "settings.json")
-    priority_list = settings["target_list"]
+    with open('settings.json', 'r') as f:
+        settings = json.load(f)
+        priority_list = settings["target_list"]
     
     # Remove players that are ostracized
     for user in priority_list:
@@ -56,9 +58,10 @@ def update_priority_list():
 def login_to_mschf(recaptcha):    
     global LOGGED_IN, USER_TOKEN, LOGIN_ACTIVE
     LOGIN_ACTIVE = True
-    settings = json.load(os.curdir + "settings.json")
-    email = settings["email"]
-    password = settings["password"]
+    with open('settings.json', 'r') as f:
+        settings = json.load(f)
+        email = settings["email"]
+        password = settings["password"]
 
     url = "https://irk0p9p6ig.execute-api.us-east-1.amazonaws.com/prod/login"
 
@@ -82,8 +85,9 @@ def login_to_mschf(recaptcha):
 
 def get_target():
     # If user has opted into API linking, get target from API
-    settings = json.load(os.curdir + "settings.json")
-    priority_list = settings["target_list"]
+    with open('settings.json', 'r') as f:
+        settings = json.load(f)
+        priority_list = settings["target_list"]
     target = priority_list[0]
     return target
 
@@ -194,12 +198,15 @@ def run():
 if __name__ == "__main__":
     while True:
         # Get user settings
-        settings = json.load(os.curdir + "settings.json")
-        voting_minute = settings["voting_minute"]
+        with open('settings.json', 'r') as f:
+            settings = json.load(f)
+            voting_minute = settings["voting_minute"]
         
-        while datetime.datetime.now().minute != voting_minute:
+        print("Waiting for voting minute: ", voting_minute)
+        while datetime.datetime.now().minute != int(voting_minute):
             time.sleep(20)
-
+        print("Running Auto Voter")
         run()
         VOTED = False
         LOGIN_ACTIVE = False
+        LOGGED_IN = False

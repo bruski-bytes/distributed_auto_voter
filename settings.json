@@ -3,8 +3,8 @@
     "auth_key": "NONE",
     "email": "NONE",
     "password": "NONE",
-    "voting_minute": "1",
+    "voting_minute": "17",
     "target_list": [
-        ""
+        "zoeynewt"
     ]
 }
