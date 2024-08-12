@@ -1,0 +1,1 @@
+# distributed_auto_voter
