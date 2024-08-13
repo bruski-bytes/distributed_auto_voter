@@ -29,19 +29,19 @@ The bottom of this document includes some tips for using the terminal.
 
 1.  **Get google chrome downloaded and installed** by running the following commands in the terminal
     
-    'sudo apt-get update'
-    'sudo apt-get install libxss1 libappindicator1 libindicator7'
-    'sudo wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb'
-    'sudo apt install ./google-chrome*.deb'
-    'sudo apt-get install -f'
+    - 'sudo apt-get update'
+    - 'sudo apt-get install libxss1 libappindicator1 libindicator7'
+    - 'sudo wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb'
+    - 'sudo apt install ./google-chrome*.deb'
+    - 'sudo apt-get install -f'
     
 2. **Setup the python virtual environment** by running these commands in terminal
-    'sudo apt install python3.12-venv'
-    'python3 -m venv venv'
-    'source venv/bin/activate'
+    - 'sudo apt install python3.12-venv'
+    - 'python3 -m venv venv'
+    - 'source venv/bin/activate'
     
 3. **Get the GitHub repo setup**
-    'git clone https://github.com/bruski-bytes/distributed_auto_voter.git'
+    - 'git clone https://github.com/bruski-bytes/distributed_auto_voter.git'
 
 4. **Install necessary python packages**
     1. type 'cd distributed_auto_voter' into the EC2 terminal and press enter. This moves you into the folder where the auto_voter lives.
