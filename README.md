@@ -8,6 +8,9 @@ https://discord.gg/NFStWDjt
 
 Don't want to worry about changing your discord profile but still want to join our group? Send an email to lilbumpkin0@gmail.com and we will get you onboarded! 
 
+### Setting up an auto-voter
+To set up your own auto-voter using this code base you can follow the video tutorial (COMING SOON). We also have a document [here](setup.md) that follows along with the video and provides all the commands you need to copy and paste while setting up your auto-voter. The entire process should take 10-20 minutes to get your auto-voter running for free in the cloud 24/7.
+
 ### Development Game Plan
 We want to make the use of this auto-voter as easy as possible. Downstream that may mean making it into an executable that people can run on their local machine or in an AWS EC2 instance. In the short term it would look like people downloading and using this code base. Ideally, they just need to change a settings file to add their credentials and the list of names that they want to vote on for ostracize and elect.
 
