@@ -1,8 +1,6 @@
 from seleniumwire import webdriver
 from fake_useragent import UserAgent
-from discord_webhook import DiscordWebhook
 import time
-import os
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -11,7 +9,19 @@ import datetime
 import json
 import random
 
-now = datetime.datetime.now(datetime.UTC)
+import os
+import sys
+
+# determine if application is a script file or frozen exe
+if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
+    print("running as an exectable")
+    application_path = sys._MEIPASS
+else:
+    print("Running as a script")
+    application_path = os.path.dirname(os.path.realpath(__file__))
+
+# print(application_path)
+SETTINGS_PATH = os.path.join(application_path, "settings.json")
 
 # GLOBAL VARIABLES 
 VERBOSE = True
@@ -40,7 +50,7 @@ def update_priority_list():
 
     print("Reading Priority List")
     # Get our current priority list
-    with open('settings.json', 'r') as f:
+    with open(SETTINGS_PATH, 'r') as f:
         settings = json.load(f)
         priority_list = settings["target_list"]
     
@@ -58,7 +68,7 @@ def update_priority_list():
 def login_to_mschf(recaptcha):    
     global LOGGED_IN, USER_TOKEN, LOGIN_ACTIVE
     LOGIN_ACTIVE = True
-    with open('settings.json', 'r') as f:
+    with open(SETTINGS_PATH, 'r') as f:
         settings = json.load(f)
         email = settings["email"]
         password = settings["password"]
@@ -80,12 +90,18 @@ def login_to_mschf(recaptcha):
     if "token" in data:
         USER_TOKEN = data['token']
         LOGGED_IN = True
+    elif "noUser" in data:
+        print("INVALID EMAIL ADDRESS")
+    elif "wrongPassword" in data:
+        print("INVALID PASSWORD")
+    
+    print(data)
 
     LOGIN_ACTIVE = False
 
 def get_target():
     # If user has opted into API linking, get target from API
-    with open('settings.json', 'r') as f:
+    with open(SETTINGS_PATH, 'r') as f:
         settings = json.load(f)
         priority_list = settings["target_list"]
     target = priority_list[0]
@@ -188,6 +204,14 @@ def run():
 
         run()
         return
+
+    while not VOTED:
+        ostracizeForm.clear()
+        time.sleep(1)
+        for letter in 'MSCHFREDDITVENMO': # 
+            time.sleep(random.randint(1, 20)/100)
+            ostracizeForm.send_keys(letter)
+
     
     # Make sure driver is quit out
     if driver:
@@ -198,15 +222,24 @@ def run():
 if __name__ == "__main__":
     while True:
         # Get user settings
-        with open('settings.json', 'r') as f:
+        with open(SETTINGS_PATH, 'r') as f:
             settings = json.load(f)
             voting_minute = settings["voting_minute"]
         
         print("Waiting for voting minute: ", voting_minute)
-        while datetime.datetime.now().minute != int(voting_minute):
+        while datetime.datetime.now().minute < int(voting_minute):
             time.sleep(20)
+            with open(SETTINGS_PATH, 'r') as f:
+                settings = json.load(f)
+                voting_minute = settings["voting_minute"]
+        
         print("Running Auto Voter")
         run()
+
+        # Wait until the next hour
+        while datetime.datetime.now().minute < 59 or datetime.datetime.now().second < 59:
+            time.sleep(20)
+
         VOTED = False
         LOGIN_ACTIVE = False
         LOGGED_IN = False
