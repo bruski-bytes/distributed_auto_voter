@@ -2,7 +2,7 @@
 ## Putting power back in the hands of the people. Brought to you by the RedditMSCHFVenmo Discord Server
 
 ### Join our group
-Want to join our group for MSCHF Plays Venmo? Join our Discord! Make sure your Discord nickname and username do not match your venmo username. Also remove any linked accounts you may have on your discord. People will go to great lengths to find you and vote you out. 
+Want to work with our group for MSCHF Plays Venmo? Join our Discord! Make sure your Discord nickname and username do not match your venmo username. Also remove any linked accounts you may have on your discord. People will go to great lengths to find you and vote you out. 
 
 https://discord.gg/NFStWDjt
 
